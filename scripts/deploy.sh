@@ -101,7 +101,9 @@ main() {
         _mimetype=$(ensure file --mime-type -b "$_file") 
 
         say "Uploading $_basename..."
-        
+        say "$_upload_url"
+        say "$GITHUB_TOKEN"
+
         _response=$(
             curl -sSL -X POST "$_upload_url?name=$_basename" \
                 -H "Accept: application/vnd.github.manifold-preview" \

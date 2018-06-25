@@ -69,7 +69,7 @@ jobs:
 
   test:
     docker:
-      - image: SidneyNiccolson/rust-test-deploy:rust-nightly-2018-01-08
+      - image: majorz/rust-test-deploy:rust-nightly-2018-01-08
     steps:
       - checkout
 
@@ -78,7 +78,7 @@ jobs:
 
   deploy:
     docker:
-      - image: SidneyNiccolson/rust-test-deploy:rust-nightly-2018-01-08
+      - image: majorz/rust-test-deploy:rust-nightly-2018-01-08
 
     environment:
       GITHUB_USER: SidneyNiccolson

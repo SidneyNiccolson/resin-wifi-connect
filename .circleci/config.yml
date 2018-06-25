@@ -81,7 +81,7 @@ jobs:
       - image: majorz/rust-test-deploy:rust-nightly-2018-01-08
 
     environment:
-      GITHUB_USER: resin-io
+      GITHUB_USER: SidneyNiccolson
       GITHUB_REPO: resin-wifi-connect
 
     steps:

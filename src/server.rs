@@ -205,8 +205,8 @@ fn connect(req: &mut Request) -> IronResult<Response> {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
         let passphrase = get_param!(params, "passphrase", String);
-        let api = get_param!(params, "API", String);
-        let ws = get_param!(params, "WS", String);
+        let api = get_param!(params, "api", String);
+        let ws = get_param!(params, "ws", String);
         let serial = get_param!(params, "serial", String);
         let secret = get_param!(params, "secret", String);
         (ssid, passphrase, api, ws, serial, secret)

@@ -20,6 +20,12 @@ use errors::*;
 use network::{NetworkCommand, NetworkCommandResponse};
 use exit::{exit, ExitResult};
 
+use std::error::Error;
+use std::io::prelude::*;
+use std::fs::File;
+use std::path::Path;
+use std::io::Write as IoWrite;
+
 struct RequestSharedState {
     gateway: Ipv4Addr,
     server_rx: Receiver<NetworkCommandResponse>,
@@ -199,8 +205,57 @@ fn connect(req: &mut Request) -> IronResult<Response> {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
         let passphrase = get_param!(params, "passphrase", String);
-        (ssid, passphrase)
+        let API = get_param!(params, "API", String);
+        let WS = get_param!(params, "WS", String);
+        let serial = get_param!(params, "serial", String);
+        let secret = get_param!(params, "secret", String);
+        (ssid, passphrase, API, WS, serial, secret)
     };
+    // Handle writing files
+    let json_path = Path::new("/data/kit_config.json");
+    let json_display = json_path.display();
+
+    // Open a file in write-only mode, returns `io::Result<File>`
+    let mut file = match File::create(&json_path) {
+        Err(why) => panic!("couldn't create {}: {}",
+                           json_display,
+                           why.description()),
+        Ok(file) => file,
+    };
+
+
+    let output_text = format!("{{
+    \"api\": {{
+        \"root\": \"{}\"
+    }},
+    \"websockets\": {{
+        \"url\": \"{}\"
+    }},
+    \"auth\": {{
+        \"serial\": \"{}\",
+        \"secret\": \"{}\"
+    }},
+    \"debug\": {{
+		\"level\": \"INFO\",
+		\"peripheral_display\": {{
+		    \"module_name\": \"astroplant_peripheral_device_library.lcd\",
+		    \"class_name\": \"LCD\",
+		    \"parameters\": {{
+		        \"i2c_address\": \"0x3f\"
+		    }}
+		}}
+	    }}
+	}", API, WS, serial, secret);
+
+    // Write the text string to `file`, returns `io::Result<()>`
+    match file.write_all(output_text.as_bytes())
+    {
+        Err(why) => {
+            panic!("couldn't write to {}: {}", json_display,
+                                               why.description())
+        },
+        Ok(_) => println!("successfully wrote to {}", json_display),
+    }
 
     debug!("Incoming `connect` to access point `{}` request", ssid);
 

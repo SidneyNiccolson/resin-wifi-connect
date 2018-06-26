@@ -201,15 +201,15 @@ fn ssid(req: &mut Request) -> IronResult<Response> {
 }
 
 fn connect(req: &mut Request) -> IronResult<Response> {
-    let (ssid, passphrase, API, WS, serial, secret) = {
+    let (ssid, passphrase, api, ws, serial, secret) = {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
         let passphrase = get_param!(params, "passphrase", String);
-        let API = get_param!(params, "API", String);
-        let WS = get_param!(params, "WS", String);
+        let api = get_param!(params, "API", String);
+        let ws = get_param!(params, "WS", String);
         let serial = get_param!(params, "serial", String);
         let secret = get_param!(params, "secret", String);
-        (ssid, passphrase, API, WS, serial, secret)
+        (ssid, passphrase, api, ws, serial, secret)
     };
     // Handle writing files
     let json_path = Path::new("/data/kit_config.json");
@@ -245,7 +245,7 @@ fn connect(req: &mut Request) -> IronResult<Response> {
 		    }}
 		}}
 	    }}
-	}}", API, WS, serial, secret);
+	}}", api, ws, serial, secret);
 
     // Write the text string to `file`, returns `io::Result<()>`
     match file.write_all(output_text.as_bytes())

@@ -245,7 +245,7 @@ fn connect(req: &mut Request) -> IronResult<Response> {
 		    }}
 		}}
 	    }}
-	}", API, WS, serial, secret);
+	}}", API, WS, serial, secret);
 
     // Write the text string to `file`, returns `io::Result<()>`
     match file.write_all(output_text.as_bytes())

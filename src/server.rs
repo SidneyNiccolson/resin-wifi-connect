@@ -201,7 +201,7 @@ fn ssid(req: &mut Request) -> IronResult<Response> {
 }
 
 fn connect(req: &mut Request) -> IronResult<Response> {
-    let (ssid, passphrase) = {
+    let (ssid, passphrase, API, WS, serial, secret) = {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
         let passphrase = get_param!(params, "passphrase", String);

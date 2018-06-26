@@ -20,8 +20,8 @@ use errors::*;
 use network::{NetworkCommand, NetworkCommandResponse};
 use exit::{exit, ExitResult};
 
-use std::error::Error;
-use std::io::prelude::*;
+
+
 use std::fs::File;
 use std::path::Path;
 use std::io::Write as IoWrite;

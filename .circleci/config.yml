@@ -73,7 +73,7 @@ jobs:
     steps:
       - checkout
 
-      - run: cargo fmt -- --write-mode=diff
+      - run: cargo fmt -- --write-mode=overwrite
       - run: cargo clippy -- -D warnings
 
   deploy:

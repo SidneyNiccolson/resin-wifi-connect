@@ -32,8 +32,9 @@ COPY astroplant-api-python-client /usr/src/app/astroplant-peripheral-device-libr
 COPY astroplant-peripheral-device-library /usr/src/app/astroplant-peripheral-device-library
 
 # Use apt-get to install dependencies
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+RUN apt-get update && apt-get install -yq --no-install-recommends --download-only \
     pigpio \
+    python3-pigpio \
     python-pigpio && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 

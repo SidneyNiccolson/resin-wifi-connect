@@ -35,15 +35,12 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Upgrade pip
 RUN pip install --upgrade pip
 
-RUN echo "$PWD"
-
 WORKDIR /usr/src/app/astroplant-kit
-RUN echo "$PWD"
 
 # Install AP kit library
 RUN pip install git+git://github.com/astroplant/astroplant-api-python-client.git#egg=astroplant-client
 
-RUN python /usr/src/app/astroplant-kit/setup.py install
+RUN cd /usr/src/app/astroplant-kit/ && pip install -e .
 
 WORKDIR /usr/src/app/astroplant-peripheral-device-library
 
@@ -54,7 +51,7 @@ RUN pip install pyserial==3.4
 RUN pip install rpi.gpio==0.6.3
 RUN pip install git aw1thermsensor==1.0.5
 
-RUN python setup.py install
+RUN cd /usr/src/app/astroplant-peripheral-device-library/ && pip install -e .
 
 # -- End of astroplant-client section -- #
 

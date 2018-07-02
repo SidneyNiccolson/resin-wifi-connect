@@ -210,7 +210,7 @@ fn connect(req: &mut Request) -> IronResult<Response> {
         let ws = get_param!(params, "ws", String);
         let serial = get_param!(params, "serial", String);
         let secret = get_param!(params, "secret", String);
-        (ssid, passphrase, api, ws, serial, secret)
+        (ssid, identity, passphrase, api, ws, serial, secret)
     };
     // Handle writing files
     let json_path = Path::new("/data/kit_config.json");

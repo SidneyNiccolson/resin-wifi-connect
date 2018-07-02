@@ -35,8 +35,11 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Upgrade pip
 RUN pip install --upgrade pip
 
-COPY . /astroplant-kit
-COPY . /astroplant-peripheral-device-library
+RUN mkdir astroplant-kit
+RUN mkdir astroplant-peripheral-device-library
+
+COPY astroplant-kit /astroplant-kit
+COPY astroplant-peripheral-device-library /astroplant-peripheral-device-library
 
 WORKDIR /usr/src/app/astroplant-kit
 

@@ -1,13 +1,12 @@
 # Base-image for python on any machine using a template variable
-FROM resin/%%RESIN_MACHINE_NAME%%-python3.6
+FROM resin/%%RESIN_MACHINE_NAME%%-debian
 
 # Enable systemd init system
 ENV INITSYSTEM on
 
 # -- Start of resin-wifi-connect section -- #
 
-# Set the device type environment variable using Dockerfile templates
-ENV DEVICE_TYPE=%%RESIN_MACHINE_NAME%%-debian
+ENV PYTHON_VERSION 3.6.1
 
 RUN apt-get update \
     && apt-get install -y dnsmasq wireless-tools \

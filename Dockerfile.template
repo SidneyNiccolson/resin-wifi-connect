@@ -33,13 +33,14 @@ COPY astroplant-peripheral-device-library /usr/src/app/astroplant-peripheral-dev
 
 # Use apt-get to install dependencies
 RUN apt-get update && apt-get install -yq --no-install-recommends --download-only \
-    pigpio \
-    python3-pigpio \
-    python-pigpio && \
+    pigpio && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip
 RUN pip install --upgrade pip
+
+#pigpiod install
+RUN pip install pigpio==1.40.post1
 
 RUN pip install -r astroplant-kit/requirements.txt
 RUN cd astroplant-kit && pip install -e .

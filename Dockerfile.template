@@ -40,7 +40,7 @@ WORKDIR /usr/src/app/astroplant-kit
 # Install AP kit library
 RUN pip install git+git://github.com/astroplant/astroplant-api-python-client.git#egg=astroplant-client
 
-RUN pip install -e astroplant-kit/setup.py
+RUN pip install -e astroplant-kit/
 
 WORKDIR /usr/src/app/astroplant-peripheral-device-library
 
@@ -51,7 +51,7 @@ RUN pip install pyserial==3.4
 RUN pip install rpi.gpio==0.6.3
 RUN pip install git aw1thermsensor==1.0.5
 
-RUN pip install -e astroplant-peripheral-device-library/setup.py
+RUN pip install -e astroplant-peripheral-device-library/
 
 # -- End of astroplant-client section -- #
 

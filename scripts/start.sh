@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Enable i2c - needed for sensorsgit a
+modprobe i2c-dev
+
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
 # Choose a condition for running WiFi Connect according to your use case:
@@ -18,9 +21,12 @@ iwgetid -r
 
 if [ $? -eq 0 ]; then
     printf 'Skipping WiFi Connect\n'
+    printf 'Starting core.py\n'
+    python astroplant-kit/astroplant_kit/core.py
 else
     printf 'Starting WiFi Connect\n'
     ./wifi-connect
 fi
 
 # Start your application here.
+

@@ -22,7 +22,7 @@ iwgetid -r
 if [ $? -eq 0 ]; then
     printf 'Skipping WiFi Connect\n'
     printf 'Starting core.py\n'
-    python astroplant-kit/astroplant_kit/core.py
+    # python astroplant-kit/astroplant_kit/core.py
 else
     printf 'Starting WiFi Connect\n'
     ./wifi-connect

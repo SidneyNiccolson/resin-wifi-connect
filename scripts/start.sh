@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Enable i2c - needed for sensorsgit a
+# Enable i2c - needed for sensors
 modprobe i2c-dev
+modprobe w1-gpio && modprobe w1-therm
 
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
 
@@ -22,7 +23,7 @@ iwgetid -r
 if [ $? -eq 0 ]; then
     printf 'Skipping WiFi Connect\n'
     printf 'Starting core.py\n'
-    # python astroplant-kit/astroplant_kit/core.py
+    cd astroplant-kit/astroplant_kit && python core.py
 else
     printf 'Starting WiFi Connect\n'
     ./wifi-connect

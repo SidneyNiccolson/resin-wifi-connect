@@ -28,6 +28,7 @@ COPY scripts/start.sh .
 
 # -- Start of astroplant-client section section -- #
 COPY astroplant-kit /usr/src/app/astroplant-kit
+COPY astroplant-kit /usr/src/app/astroplant-peripheral-device-library
 COPY astroplant-peripheral-device-library /usr/src/app/astroplant-peripheral-device-library
 
 # Use apt-get to install dependencies
@@ -44,6 +45,9 @@ RUN pip install --upgrade pip
 
 RUN pip install -r astroplant-kit/requirements.txt
 RUN cd astroplant-kit && pip install -e .
+
+RUN pip install -r astroplant-api-python-client/requirements.txt
+RUN cd astroplant-api-python-client && pip install -e .
 
 RUN pip install -r astroplant-peripheral-device-library/requirements.txt
 RUN cd astroplant-peripheral-device-library && pip install -e .

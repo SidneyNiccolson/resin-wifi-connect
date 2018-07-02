@@ -43,7 +43,7 @@ COPY astroplant-peripheral-device-library /astroplant-peripheral-device-library
 
 # Install AP kit library
 # RUN pip install git+git://github.com/astroplant/astroplant-api-python-client.git#egg=astroplant-client
-RUN cd /usr/src/app/astroplant-kit/ && pip install -r requirements.txt
+RUN cd /usr/src/app/astroplant-kit/ && pip install -r /usr/src/app/astroplant-kit/requirements.txt
 RUN cd /usr/src/app/astroplant-kit/ && python setup.py install
 
 WORKDIR /usr/src/app/astroplant-peripheral-device-library

@@ -1,5 +1,5 @@
 # Base-image for python on any machine using a template variable
-FROM resin/%%RESIN_MACHINE_NAME%%-python3.6
+FROM resin/%%RESIN_MACHINE_NAME%%-python3.5
 
 # Enable systemd init system
 ENV INITSYSTEM on

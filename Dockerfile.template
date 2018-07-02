@@ -1,5 +1,5 @@
 # Base-image for python on any machine using a template variable
-FROM resin/%%RESIN_MACHINE_NAME%%-python
+FROM resin/raspberry-pi-python:3.6
 
 # Enable systemd init system
 ENV INITSYSTEM on

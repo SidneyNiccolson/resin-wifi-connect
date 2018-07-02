@@ -23,13 +23,15 @@ RUN curl https://api.github.com/repos/SidneyNiccolson/resin-wifi-connect/release
 
 # -- End of resin-wifi-connect section -- #
 
+# Copy start script into container
+COPY scripts/start.sh .
+
 # -- Start of astroplant-client section section -- #
+COPY astroplant-kit /usr/src/app/astroplant-kit
+COPY astroplant-peripheral-device-library /usr/src/app/astroplant-peripheral-device-library
 
 
 # -- End of astroplant-client section -- #
-
-# Copy start script into container
-COPY scripts/start.sh .
 
 CMD ["bash", "start.sh"]
 

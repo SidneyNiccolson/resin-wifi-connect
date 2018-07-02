@@ -27,7 +27,7 @@ RUN curl https://api.github.com/repos/SidneyNiccolson/resin-wifi-connect/release
 
 # Use apt-get to install dependencies
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    python-dev \
+    python3-dev \
     python-smbus \
     python-psutil && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -42,7 +42,7 @@ COPY astroplant-kit /astroplant-kit
 COPY astroplant-peripheral-device-library /astroplant-peripheral-device-library
 
 WORKDIR /usr/src/app/astroplant-kit
-
+RUN echo "ls"
 # Install AP kit library
 RUN pip install git+git://github.com/astroplant/astroplant-api-python-client.git#egg=astroplant-client
 

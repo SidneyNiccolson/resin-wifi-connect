@@ -6,7 +6,6 @@ ENV INITSYSTEM on
 
 
 #PYTHON 3.6
-
 # remove several traces of debian python
 RUN apt-get purge -y python.*
 
@@ -14,10 +13,10 @@ RUN apt-get purge -y python.*
 # > At the moment, setting "LANG=C" on a Linux system *fundamentally breaks Python 3*, and that's not OK.
 ENV LANG C.UTF-8
 
-# install python dependencies
+# install dbus-python dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-		libsqlite3-0 \
-		libssl1.0.0 \
+		libdbus-1-dev \
+		libdbus-glib-1-dev \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& apt-get -y autoremove
 
@@ -27,22 +26,18 @@ RUN gpg --keyserver keyring.debian.org --recv-keys 4DE8FF2A63C7CC90 \
 	&& gpg --keyserver pgp.mit.edu  --recv-key 6E3CBCE93372DCFA \
 	&& gpg --keyserver pgp.mit.edu --recv-keys 0x52a43a1e4b77b059
 
-ENV PYTHON_VERSION 3.6.1
+ENV PYTHON_VERSION 3.6.5
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 9.0.1
+ENV PYTHON_PIP_VERSION 10.0.1
 
-ENV SETUPTOOLS_VERSION 34.3.3
+ENV SETUPTOOLS_VERSION 39.1.0
 
 RUN set -x \
-	&& buildDeps=' \
-		curl \
-	' \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-	&& curl -SLO "http://resin-packages.s3.amazonaws.com/python/v$PYTHON_VERSION/Python-$PYTHON_VERSION.linux-armv6hf.tar.gz" \
-	&& echo "85e7295f5194ee2c099cfcf2a27e186d9714e849468bf1fa52292be6b2217621  Python-3.6.1.linux-armv6hf.tar.gz" | sha256sum -c - \
-	&& tar -xzf "Python-$PYTHON_VERSION.linux-armv6hf.tar.gz" --strip-components=1 \
-	&& rm -rf "Python-$PYTHON_VERSION.linux-armv6hf.tar.gz" \
+	&& curl -SLO "http://resin-packages.s3.amazonaws.com/python/v$PYTHON_VERSION/Python-$PYTHON_VERSION.linux-armv7hf.tar.gz" \
+	&& echo "f83ae3752db8acde2f73d100d1c401e00a5d4e604bc248c51fc87d5b76a5aa32  Python-3.6.5.linux-armv7hf.tar.gz" | sha256sum -c - \
+	&& tar -xzf "Python-$PYTHON_VERSION.linux-armv7hf.tar.gz" --strip-components=1 \
+	&& rm -rf "Python-$PYTHON_VERSION.linux-armv7hf.tar.gz" \
 	&& ldconfig \
 	&& if [ ! -e /usr/local/bin/pip3 ]; then : \
 		&& curl -SLO "https://raw.githubusercontent.com/pypa/get-pip/430ba37776ae2ad89f794c7a43b90dc23bac334c/get-pip.py" \
@@ -57,27 +52,15 @@ RUN set -x \
 		-o \( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
 		-exec rm -rf '{}' + \
 	&& cd / \
-	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /usr/src/python ~/.cache
 
 # install "virtualenv", since the vast majority of users of this image will want it
 RUN pip3 install --no-cache-dir virtualenv
 
-# install dbus-python dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		libdbus-1-dev \
-		libdbus-glib-1-dev \
-	&& rm -rf /var/lib/apt/lists/*
-
 ENV PYTHON_DBUS_VERSION 1.2.4
 
 # install dbus-python
 RUN set -x \
-	&& buildDeps=' \
-		curl \
-		build-essential \
-	' \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p /usr/src/dbus-python \
 	&& curl -SL "http://dbus.freedesktop.org/releases/dbus-python/dbus-python-$PYTHON_DBUS_VERSION.tar.gz" -o dbus-python.tar.gz \
 	&& curl -SL "http://dbus.freedesktop.org/releases/dbus-python/dbus-python-$PYTHON_DBUS_VERSION.tar.gz.asc" -o dbus-python.tar.gz.asc \
@@ -89,7 +72,6 @@ RUN set -x \
 	&& make -j$(nproc) \
 	&& make install -j$(nproc) \
 	&& cd / \
-	&& apt-get purge -y --auto-remove $buildDeps \
 	&& rm -rf /usr/src/dbus-python
 
 # make some useful symlinks that are expected to exist

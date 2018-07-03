@@ -28,7 +28,6 @@ COPY scripts/start.sh .
 
 # -- Start of astroplant-client section section -- #
 COPY astroplant-kit /usr/src/app/astroplant-kit
-COPY astroplant-api-python-client /usr/src/app/astroplant-peripheral-device-library
 COPY astroplant-peripheral-device-library /usr/src/app/astroplant-peripheral-device-library
 
 # Use apt-get to install dependencies

@@ -45,9 +45,6 @@ RUN pip install pigpio==1.40.post1
 RUN pip install -r astroplant-kit/requirements.txt
 RUN cd astroplant-kit && pip install -e .
 
-# RUN pip install -r astroplant-api-python-client/requirements.txt
-# RUN cd astroplant-api-python-client && pip install -e .
-
 RUN pip install -r astroplant-peripheral-device-library/requirements.txt
 RUN cd astroplant-peripheral-device-library && pip install -e .
 

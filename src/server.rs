@@ -239,11 +239,8 @@ fn connect(req: &mut Request) -> IronResult<Response> {
     \"debug\": {{
 		\"level\": \"INFO\",
 		\"peripheral_display\": {{
-		    \"module_name\": \"astroplant_peripheral_device_library.lcd\",
-		    \"class_name\": \"LCD\",
-		    \"parameters\": {{
-		        \"i2c_address\": \"0x3f\"
-		    }}
+		    \"module_name\": \"peripheral\",
+		    \"class_name\": \"BlackHoleDisplay\"
 		}}
 	    }}
 	}}", api, ws, serial, secret);
